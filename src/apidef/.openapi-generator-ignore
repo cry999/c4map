@@ -1,0 +1,16 @@
+apis/
+auth/
+http/
+types/
+DefaultApi.md
+README.md
+configuration.ts
+git_push.sh
+index.ts
+middleware.ts
+package.json
+rxjsStub.ts
+servers.ts
+tsconfig.json
+util.ts
+.gitignore

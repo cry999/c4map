@@ -8,9 +8,11 @@
     "build": "tsc && vite build",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
-    "gen:dsl": "structurizr-cli export -w src/testdata/workspace.dsl -f json -o src/testdata"
+    "gen:dsl": "structurizr-cli export -w src/testdata/workspace.dsl -f json -o src/testdata",
+    "gen:api": "openapi-generator-cli generate -g typescript -i https://raw.githubusercontent.com/structurizr/json/master/structurizr.yaml -o src/apidef"
   },
   "dependencies": {
+    "@openapitools/openapi-generator-cli": "^2.7.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   },
