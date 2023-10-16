@@ -1,35 +1,57 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useCallback } from 'react';
+import Reactflow, {
+  Background,
+  Controls,
+  MiniMap,
+  useNodesState,
+  useEdgesState,
+  addEdge,
+  Edge,
+  Connection,
+  BackgroundVariant,
+} from 'reactflow';
+
+import { PersonNode, PersonNodeData } from './components/Node';
+
+import { Workspace } from './apidef/models/Workspace';
+import * as workspace from './testdata/workspace.json';
+
+import 'reactflow/dist/style.css';
+
+const initialEdges = [
+  { id: 'e1-2', source: '1', target: '2' },
+];
+
+const nodeTypes = {
+  personNode: PersonNode,
+};
 
 function App() {
-  const [count, setCount] = useState(0)
-
+  const data = workspace as Workspace;
+  const initialNodes = data.model?.people?.map((person) => ({
+    id: person.id!,
+    type: 'personNode',
+    data: new PersonNodeData(person), position: { x: 0, y: 0 }
+  })) || [];
+  const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes);
+  const [edges, setEdges, onEdgesChange] = useEdgesState(initialEdges);
+  const onConnect = useCallback((params: Edge | Connection) => setEdges((eds) => addEdge(params, eds)), [setEdges]);
   return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    <div style={{ width: '100vw', height: '100vh' }}>
+      <Reactflow
+        nodeTypes={nodeTypes}
+        nodes={nodes}
+        edges={edges}
+        onNodesChange={onNodesChange}
+        onEdgesChange={onEdgesChange}
+        onConnect={onConnect}
+      >
+        <Controls />
+        <MiniMap />
+        <Background variant={BackgroundVariant.Dots} gap={12} size={1} />
+      </Reactflow >
+    </div>
+  );
 }
 
-export default App
+export default App;

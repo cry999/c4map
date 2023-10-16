@@ -12,11 +12,12 @@
     "gen:api": "openapi-generator-cli generate -g typescript -i https://raw.githubusercontent.com/structurizr/json/master/structurizr.yaml -o src/apidef"
   },
   "dependencies": {
-    "@openapitools/openapi-generator-cli": "^2.7.0",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react-dom": "^18.2.0",
+    "reactflow": "^11.9.3"
   },
   "devDependencies": {
+    "@openapitools/openapi-generator-cli": "^2.7.0",
     "@types/react": "^18.2.15",
     "@types/react-dom": "^18.2.7",
     "@typescript-eslint/eslint-plugin": "^6.0.0",
